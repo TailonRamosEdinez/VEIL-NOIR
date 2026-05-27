@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Veil Noir — By Jocheved</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-dim: #8A6D2F;
+    --black: #080808;
+    --off-black: #0F0F0F;
+    --charcoal: #1A1A1A;
+    --cream: #F5EDD6;
+    --cream-dim: #9A8E75;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--black);
+    color: var(--cream);
+    font-family: 'Jost', sans-serif;
+    font-weight: 200;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    position: fixed;
+    width: 8px; height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 32px; height: 32px;
+    border: 0.5px solid var(--gold-dim);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: all 0.18s ease;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem 4rem;
+    mix-blend-mode: normal;
+  }
+
+  nav::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 4rem; right: 4rem;
+    height: 0.5px;
+    background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+    opacity: 0.4;
+  }
+
+  .nav-brand {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 3rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 300;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    text-decoration: none;
+    transition: color 0.4s ease;
+    position: relative;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0; right: 0;
+    height: 0.5px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+
+  .nav-links a:hover { color: var(--gold-light); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 8rem 4rem 6rem;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  /* Subtle radial vignette */
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 50% 50%, transparent 40%, rgba(0,0,0,0.7) 100%);
+    pointer-events: none;
+  }
+
+  /* Decorative corner lines */
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: 8rem; left: 4rem; right: 4rem; bottom: 5rem;
+    border: 0.5px solid rgba(201, 168, 76, 0.12);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 300;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 1s 0.3s forwards ease;
+  }
+
+  .hero-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(5rem, 14vw, 13rem);
+    font-weight: 400;
+    line-height: 0.88;
+    letter-spacing: 0.02em;
+    color: var(--gold-light);
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeUp 1.2s 0.5s forwards ease;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-title span {
+    display: block;
+    color: var(--cream);
+    font-size: 0.82em;
+    letter-spacing: 0.06em;
+    margin-top: 0.1em;
+  }
+
+  .hero-divider {
+    width: 60px;
+    height: 0.5px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 3rem auto;
+    opacity: 0;
+    animation: fadeIn 1s 1s forwards ease;
+  }
+
+  .hero-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    font-style: italic;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: var(--cream-dim);
+    opacity: 0;
+    animation: fadeUp 1s 1.1s forwards ease;
+    max-width: 40ch;
+    line-height: 1.8;
+  }
+
+  .hero-cta-group {
+    display: flex;
+    gap: 2rem;
+    margin-top: 4rem;
+    opacity: 0;
+    animation: fadeUp 1s 1.4s forwards ease;
+  }
+
+  .btn-primary {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 300;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--black);
+    background: var(--gold);
+    border: none;
+    padding: 1rem 2.5rem;
+    text-decoration: none;
+    cursor: none;
+    transition: background 0.4s ease, color 0.4s ease;
+  }
+
+  .btn-primary:hover { background: var(--gold-light); }
+
+  .btn-ghost {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 300;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: transparent;
+    border: 0.5px solid var(--gold-dim);
+    padding: 1rem 2.5rem;
+    text-decoration: none;
+    cursor: none;
+    transition: border-color 0.4s ease, color 0.4s ease;
+  }
+
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold-light); }
+
+  /* Scroll indicator */
+  .scroll-hint {
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    opacity: 0;
+    animation: fadeIn 1s 2s forwards ease;
+  }
+
+  .scroll-hint span {
+    font-size: 0.55rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+  }
+
+  .scroll-line {
+    width: 0.5px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--gold-dim), transparent);
+    animation: scrollPulse 2s infinite ease;
+  }
+
+  /* SECTION: TAGLINE */
+  .tagline-section {
+    padding: 8rem 4rem;
+    display: flex;
+    align-items: center;
+    gap: 6rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .tagline-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 7rem;
+    font-weight: 300;
+    color: var(--charcoal);
+    line-height: 1;
+    flex-shrink: 0;
+    user-select: none;
+  }
+
+  .tagline-content {}
+
+  .tagline-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+
+  .tagline-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 300;
+    line-height: 1.35;
+    color: var(--cream);
+    letter-spacing: 0.02em;
+  }
+
+  .tagline-text em {
+    color: var(--gold-light);
+    font-style: italic;
+  }
+
+  /* SECTION: COLLECTIONS GRID */
+  .collections-section {
+    padding: 6rem 4rem 10rem;
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 5rem;
+    padding-bottom: 2rem;
+    border-bottom: 0.5px solid rgba(201, 168, 76, 0.2);
+  }
+
+  .section-title-group {}
+
+  .section-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 400;
+    color: var(--cream);
+    letter-spacing: 0.04em;
+  }
+
+  .section-link {
+    font-size: 0.6rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+    border-bottom: 0.5px solid var(--gold-dim);
+    padding-bottom: 4px;
+    transition: color 0.3s ease, border-color 0.3s ease;
+  }
+
+  .section-link:hover { color: var(--gold-light); border-color: var(--gold-light); }
+
+  .collections-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 1.5px;
+  }
+
+  .col-card {
+    background: var(--charcoal);
+    padding: 4rem 3rem;
+    position: relative;
+    overflow: hidden;
+    cursor: none;
+    transition: background 0.5s ease;
+  }
+
+  .col-card:first-child {
+    grid-row: span 2;
+    padding: 6rem 4rem;
+  }
+
+  .col-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 60%, rgba(201, 168, 76, 0.04) 100%);
+    transition: opacity 0.5s ease;
+  }
+
+  .col-card:hover { background: #1E1E1E; }
+
+  .col-card:hover .card-arrow { transform: translate(4px, -4px); opacity: 1; }
+
+  .card-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.75rem;
+    font-weight: 300;
+    color: var(--gold-dim);
+    letter-spacing: 0.2em;
+    margin-bottom: 3rem;
+  }
+
+  .card-category {
+    font-size: 0.55rem;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+
+  .card-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+    font-weight: 400;
+    color: var(--cream);
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+  }
+
+  .col-card:first-child .card-title { font-size: clamp(2rem, 3.5vw, 3rem); }
+
+  .card-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--cream-dim);
+    line-height: 1.7;
+    max-width: 30ch;
+  }
+
+  .card-arrow {
+    position: absolute;
+    bottom: 3rem; right: 3rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.4;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+  }
+
+  .card-line {
+    position: absolute;
+    bottom: 0; left: 0;
+    height: 1.5px;
+    width: 0;
+    background: var(--gold);
+    transition: width 0.6s ease;
+  }
+
+  .col-card:hover .card-line { width: 100%; }
+
+  /* FOOTER STRIP */
+  .footer-strip {
+    border-top: 0.5px solid rgba(201, 168, 76, 0.15);
+    padding: 4rem 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-brand {
+    font-family: 'Cinzel', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--gold-light);
+    letter-spacing: 0.1em;
+  }
+
+  .footer-brand small {
+    display: block;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.55rem;
+    font-weight: 300;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-top: 0.4rem;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 3rem;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .footer-links a:hover { color: var(--gold); }
+
+  .footer-copy {
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    color: #3A3A3A;
+  }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  /* Horizontal gold rule */
+  .gold-rule {
+    width: 100%;
+    height: 0.5px;
+    background: linear-gradient(90deg, transparent, var(--gold-dim) 20%, var(--gold-dim) 80%, transparent);
+    opacity: 0.25;
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-brand">Veil Noir</a>
+  <ul class="nav-links">
+    <li><a href="#">Collections</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">Atelier</a></li>
+    <li><a href="#">Shop</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-eyebrow">By Jocheved — Est. MMXXIV</p>
+  <h1 class="hero-title">
+    Veil
+    <span>Noir</span>
+  </h1>
+  <div class="hero-divider"></div>
+  <p class="hero-sub">Where mystery becomes adornment, and silence wears gold.</p>
+  <div class="hero-cta-group">
+    <a href="#" class="btn-primary">Explore Collections</a>
+    <a href="#" class="btn-ghost">Our Story</a>
+  </div>
+
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<div class="gold-rule"></div>
+
+<!-- TAGLINE -->
+<section class="tagline-section">
+  <div class="tagline-number">I.</div>
+  <div class="tagline-content">
+    <p class="tagline-label">The Philosophy</p>
+    <p class="tagline-text">Every piece is a <em>ritual</em>. Crafted not merely to be worn, but to be <em>felt</em> — an intimate conversation between the wearer and the unseen.</p>
+  </div>
+</section>
+
+<div class="gold-rule"></div>
+
+<!-- COLLECTIONS -->
+<section class="collections-section">
+  <div class="section-header">
+    <div class="section-title-group">
+      <p class="section-label">Curated for the discerning</p>
+      <h2 class="section-title">Collections</h2>
+    </div>
+    <a href="#" class="section-link">View all collections</a>
+  </div>
+
+  <div class="collections-grid">
+
+    <div class="col-card">
+      <p class="card-num">01</p>
+      <p class="card-category">Signature</p>
+      <h3 class="card-title">Masquerade Noir</h3>
+      <p class="card-desc">The original. Gold leaf meets obsidian velvet in a collection born from the shadows of Venice.</p>
+      <span class="card-arrow">Discover →</span>
+      <div class="card-line"></div>
+    </div>
+
+    <div class="col-card">
+      <p class="card-num">02</p>
+      <p class="card-category">Seasonal</p>
+      <h3 class="card-title">Crimson Dusk</h3>
+      <p class="card-desc">Autumn's last breath, rendered in garnet and dark bronze.</p>
+      <span class="card-arrow">Discover →</span>
+      <div class="card-line"></div>
+    </div>
+
+    <div class="col-card">
+      <p class="card-num">03</p>
+      <p class="card-category">Bespoke</p>
+      <h3 class="card-title">Atelier Private</h3>
+      <p class="card-desc">Commissioned pieces. One name. One mask.</p>
+      <span class="card-arrow">Inquire →</span>
+      <div class="card-line"></div>
+    </div>
+
+    <div class="col-card">
+      <p class="card-num">04</p>
+      <p class="card-category">Limited</p>
+      <h3 class="card-title">Ivory & Ash</h3>
+      <p class="card-desc">Twelve pieces only. A study in monochrome tension.</p>
+      <span class="card-arrow">Discover →</span>
+      <div class="card-line"></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER STRIP -->
+<footer class="footer-strip">
+  <div class="footer-brand">
+    Veil Noir
+    <small>By Jocheved</small>
+  </div>
+
+  <ul class="footer-links">
+    <li><a href="#">Collections</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">Shop</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+
+  <p class="footer-copy">© 2024 Veil Noir. All rights reserved.</p>
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursor-ring');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+  });
+
+  function animateRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  document.querySelectorAll('a, button, .col-card').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      ring.style.transform = 'translate(-50%, -50%) scale(1.8)';
+      ring.style.borderColor = 'rgba(201, 168, 76, 0.5)';
+    });
+    el.addEventListener('mouseleave', () => {
+      ring.style.transform = 'translate(-50%, -50%) scale(1)';
+      ring.style.borderColor = 'rgba(201, 168, 76, 0.3)';
+    });
+  });
+</script>
+</body>
+</html>
