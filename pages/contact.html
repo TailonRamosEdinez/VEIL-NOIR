@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Veil Noir</title>
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  .contact-section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 6rem 4rem 10rem;
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 8rem;
+    align-items: start;
+  }
+  .contact-info {}
+  .contact-info-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2rem;
+    display: block;
+  }
+  .contact-info p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--cream-dim);
+    line-height: 1.8;
+    margin-bottom: 3rem;
+  }
+  .contact-detail {
+    margin-bottom: 1.5rem;
+  }
+  .contact-detail span {
+    display: block;
+    font-size: 0.55rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 0.4rem;
+  }
+  .contact-detail a, .contact-detail p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--cream-dim);
+    text-decoration: none;
+    font-style: normal;
+    margin: 0;
+    transition: color 0.3s ease;
+  }
+  .contact-detail a:hover { color: var(--gold); }
+
+  /* Form */
+  .contact-form { display: flex; flex-direction: column; gap: 2rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.75rem; }
+  .form-label {
+    font-size: 0.55rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+  }
+  .form-input, .form-textarea {
+    background: var(--charcoal);
+    border: none;
+    border-bottom: 0.5px solid rgba(201,168,76,0.25);
+    padding: 1rem 0;
+    color: var(--cream);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 300;
+    outline: none;
+    width: 100%;
+    transition: border-color 0.3s ease;
+    cursor: none;
+    background: transparent;
+  }
+  .form-input:focus, .form-textarea:focus { border-color: var(--gold); }
+  .form-textarea { resize: none; height: 120px; }
+  .form-submit {
+    align-self: flex-start;
+    margin-top: 1rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<nav>
+  <a href="../index.html" class="nav-brand">Veil Noir</a>
+  <ul class="nav-links">
+    <li><a href="collections.html">Collections</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="atelier.html">Atelier</a></li>
+    <li><a href="shop.html">Shop</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <p class="page-eyebrow">Reach Us</p>
+  <h1 class="page-title">Contact</h1>
+</div>
+
+<div class="gold-rule"></div>
+
+<section class="contact-section">
+  <div class="contact-info">
+    <span class="contact-info-label">Get in touch</span>
+    <p>For inquiries, bespoke commissions, press, or simply to speak with us — we welcome every conversation.</p>
+
+    <div class="contact-detail">
+      <span>Email</span>
+      <a href="mailto:hello@veilnoir.com">hello@veilnoir.com</a>
+    </div>
+    <div class="contact-detail">
+      <span>Atelier</span>
+      <p>By appointment only</p>
+    </div>
+    <div class="contact-detail">
+      <span>Response time</span>
+      <p>Within 48 hours</p>
+    </div>
+  </div>
+
+  <div class="contact-form">
+    <div class="form-group">
+      <label class="form-label">Your name</label>
+      <input type="text" class="form-input" placeholder="—">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Email address</label>
+      <input type="email" class="form-input" placeholder="—">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Subject</label>
+      <input type="text" class="form-input" placeholder="—">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Message</label>
+      <textarea class="form-textarea" placeholder="—"></textarea>
+    </div>
+    <div class="form-submit">
+      <a href="#" class="btn-primary">Send Message</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">Veil Noir<small>By Jocheved</small></div>
+  <ul class="footer-links">
+    <li><a href="collections.html">Collections</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="shop.html">Shop</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <p class="footer-copy">© 2024 Veil Noir. All rights reserved.</p>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

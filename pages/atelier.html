@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atelier — Veil Noir</title>
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  .atelier-section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 6rem 4rem 10rem;
+  }
+  .atelier-intro {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 8rem;
+    margin-bottom: 8rem;
+    align-items: center;
+  }
+  .atelier-text p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-weight: 300;
+    line-height: 1.9;
+    color: var(--cream-dim);
+    margin-bottom: 2rem;
+  }
+  .atelier-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2rem;
+    display: block;
+  }
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5px;
+    margin-bottom: 8rem;
+  }
+  .step-card {
+    background: var(--charcoal);
+    padding: 3rem 2.5rem;
+  }
+  .step-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    font-weight: 300;
+    color: #222;
+    line-height: 1;
+    margin-bottom: 1.5rem;
+  }
+  .step-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--gold-light);
+    letter-spacing: 0.08em;
+    margin-bottom: 1rem;
+  }
+  .step-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.95rem;
+    font-style: italic;
+    color: var(--cream-dim);
+    line-height: 1.7;
+  }
+  .atelier-cta {
+    text-align: center;
+    padding: 6rem 0;
+    border-top: 0.5px solid rgba(201,168,76,0.15);
+  }
+  .atelier-cta h2 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 400;
+    color: var(--cream);
+    letter-spacing: 0.06em;
+    margin-bottom: 1.5rem;
+  }
+  .atelier-cta p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--cream-dim);
+    margin-bottom: 3rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<nav>
+  <a href="../index.html" class="nav-brand">Veil Noir</a>
+  <ul class="nav-links">
+    <li><a href="collections.html">Collections</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="atelier.html" class="active">Atelier</a></li>
+    <li><a href="shop.html">Shop</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <p class="page-eyebrow">Bespoke Commissions</p>
+  <h1 class="page-title">Atelier</h1>
+</div>
+
+<div class="gold-rule"></div>
+
+<section class="atelier-section">
+  <div class="atelier-intro">
+    <div class="atelier-text">
+      <span class="atelier-label">The Private Atelier</span>
+      <p>Some desires cannot be met by what already exists. For those, we offer the atelier — a private commission service where each piece is conceived, designed, and crafted exclusively for one person.</p>
+      <p>The process begins with a conversation. We listen first. Then we create.</p>
+      <a href="contact.html" class="btn-primary">Request a Commission</a>
+    </div>
+    <div>
+      <p style="font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,3.5vw,2.8rem); font-weight:300; font-style:italic; color:var(--cream); line-height:1.3;">
+        "One name.<br>One mask.<br><span style="color:var(--gold-light)">One story.</span>"
+      </p>
+    </div>
+  </div>
+
+  <div class="gold-rule"></div>
+
+  <div style="margin: 6rem 0 3rem;">
+    <p class="atelier-label">The Process</p>
+  </div>
+
+  <div class="process-steps">
+    <div class="step-card">
+      <p class="step-num">01</p>
+      <h3 class="step-title">Consultation</h3>
+      <p class="step-text">We begin with a private conversation — your vision, your story, your intention for the piece.</p>
+    </div>
+    <div class="step-card">
+      <p class="step-num">02</p>
+      <h3 class="step-title">Concept</h3>
+      <p class="step-text">Our artisans sketch and propose. Materials are selected. Nothing proceeds without your approval.</p>
+    </div>
+    <div class="step-card">
+      <p class="step-num">03</p>
+      <h3 class="step-title">Creation</h3>
+      <p class="step-text">The piece is crafted entirely by hand. Each detail is executed with complete deliberation.</p>
+    </div>
+    <div class="step-card">
+      <p class="step-num">04</p>
+      <h3 class="step-title">Delivery</h3>
+      <p class="step-text">Your piece arrives in a custom Veil Noir case, sealed. Yours alone.</p>
+    </div>
+  </div>
+
+  <div class="atelier-cta">
+    <h2>Begin Your Commission</h2>
+    <p>Timelines vary from 4 to 12 weeks depending on complexity.</p>
+    <a href="contact.html" class="btn-ghost">Contact the Atelier</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">Veil Noir<small>By Jocheved</small></div>
+  <ul class="footer-links">
+    <li><a href="collections.html">Collections</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="shop.html">Shop</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <p class="footer-copy">© 2024 Veil Noir. All rights reserved.</p>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

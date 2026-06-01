@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Collections — Veil Noir</title>
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  .collections-page { padding: 6rem 4rem 10rem; max-width: 1300px; margin: 0 auto; }
+  .filter-bar {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 5rem;
+    padding-bottom: 2rem;
+    border-bottom: 0.5px solid rgba(201,168,76,0.15);
+  }
+  .filter-btn {
+    font-size: 0.6rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    background: none;
+    border: none;
+    cursor: none;
+    padding: 0.5rem 0;
+    position: relative;
+    transition: color 0.3s ease;
+  }
+  .filter-btn.active, .filter-btn:hover { color: var(--gold); }
+  .filter-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 0.5px;
+    background: var(--gold);
+  }
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+  }
+  .product-card {
+    background: var(--charcoal);
+    padding: 3rem;
+    position: relative;
+    overflow: hidden;
+    cursor: none;
+    transition: background 0.4s ease;
+  }
+  .product-card:hover { background: #1E1E1E; }
+  .product-card:hover .card-line { width: 100%; }
+  .product-placeholder {
+    width: 100%;
+    aspect-ratio: 3/2;
+    background: #111;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .product-placeholder span {
+    font-size: 0.55rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #2A2A2A;
+  }
+  .product-category {
+    font-size: 0.55rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+  }
+  .product-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--cream);
+    letter-spacing: 0.04em;
+    margin-bottom: 0.75rem;
+  }
+  .product-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--cream-dim);
+  }
+  .card-line {
+    position: absolute;
+    bottom: 0; left: 0;
+    height: 1.5px; width: 0;
+    background: var(--gold);
+    transition: width 0.6s ease;
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<nav>
+  <a href="../index.html" class="nav-brand">Veil Noir</a>
+  <ul class="nav-links">
+    <li><a href="collections.html" class="active">Collections</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="atelier.html">Atelier</a></li>
+    <li><a href="shop.html">Shop</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <p class="page-eyebrow">By Jocheved</p>
+  <h1 class="page-title">Collections</h1>
+</div>
+
+<div class="gold-rule"></div>
+
+<section class="collections-page">
+  <div class="filter-bar">
+    <button class="filter-btn active">All</button>
+    <button class="filter-btn">Signature</button>
+    <button class="filter-btn">Seasonal</button>
+    <button class="filter-btn">Bespoke</button>
+    <button class="filter-btn">Limited</button>
+  </div>
+
+  <div class="products-grid">
+    <div class="product-card">
+      <div class="product-placeholder"><span>Image</span></div>
+      <p class="product-category">Signature</p>
+      <h3 class="product-name">Masquerade Noir</h3>
+      <p class="product-price">From $480</p>
+      <div class="card-line"></div>
+    </div>
+    <div class="product-card">
+      <div class="product-placeholder"><span>Image</span></div>
+      <p class="product-category">Seasonal</p>
+      <h3 class="product-name">Crimson Dusk</h3>
+      <p class="product-price">From $320</p>
+      <div class="card-line"></div>
+    </div>
+    <div class="product-card">
+      <div class="product-placeholder"><span>Image</span></div>
+      <p class="product-category">Limited</p>
+      <h3 class="product-name">Ivory & Ash</h3>
+      <p class="product-price">From $560</p>
+      <div class="card-line"></div>
+    </div>
+    <div class="product-card">
+      <div class="product-placeholder"><span>Image</span></div>
+      <p class="product-category">Bespoke</p>
+      <h3 class="product-name">Atelier Private</h3>
+      <p class="product-price">On request</p>
+      <div class="card-line"></div>
+    </div>
+    <div class="product-card">
+      <div class="product-placeholder"><span>Image</span></div>
+      <p class="product-category">Signature</p>
+      <h3 class="product-name">Velvet Veil</h3>
+      <p class="product-price">From $390</p>
+      <div class="card-line"></div>
+    </div>
+    <div class="product-card">
+      <div class="product-placeholder"><span>Image</span></div>
+      <p class="product-category">Seasonal</p>
+      <h3 class="product-name">Midnight Bloom</h3>
+      <p class="product-price">From $410</p>
+      <div class="card-line"></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">Veil Noir<small>By Jocheved</small></div>
+  <ul class="footer-links">
+    <li><a href="collections.html">Collections</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="shop.html">Shop</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <p class="footer-copy">© 2024 Veil Noir. All rights reserved.</p>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

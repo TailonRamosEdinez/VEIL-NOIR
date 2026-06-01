@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Veil Noir</title>
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  .about-section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 6rem 4rem 10rem;
+  }
+  .about-intro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8rem;
+    margin-bottom: 8rem;
+    align-items: center;
+  }
+  .about-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.3;
+    color: var(--cream);
+  }
+  .about-quote em { color: var(--gold-light); font-style: normal; }
+  .about-body p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-weight: 300;
+    line-height: 1.9;
+    color: var(--cream-dim);
+    margin-bottom: 2rem;
+  }
+  .about-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2rem;
+    display: block;
+  }
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+    margin-top: 6rem;
+  }
+  .value-card {
+    background: var(--charcoal);
+    padding: 4rem 3rem;
+    position: relative;
+  }
+  .value-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    font-weight: 300;
+    color: #222;
+    margin-bottom: 1.5rem;
+    line-height: 1;
+  }
+  .value-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--gold-light);
+    letter-spacing: 0.06em;
+    margin-bottom: 1rem;
+  }
+  .value-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--cream-dim);
+    line-height: 1.7;
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<nav>
+  <a href="../index.html" class="nav-brand">Veil Noir</a>
+  <ul class="nav-links">
+    <li><a href="collections.html">Collections</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="atelier.html">Atelier</a></li>
+    <li><a href="shop.html">Shop</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <p class="page-eyebrow">The Story</p>
+  <h1 class="page-title">About</h1>
+</div>
+
+<div class="gold-rule"></div>
+
+<section class="about-section">
+  <div class="about-intro">
+    <div class="about-quote">
+      "To wear a mask is to reveal a <em>truer</em> self."
+    </div>
+    <div class="about-body">
+      <span class="about-label">By Jocheved</span>
+      <p>Veil Noir was born from the belief that adornment is not vanity — it is language. Each piece speaks of intention, of quiet power, of the space between who we are and who we choose to be.</p>
+      <p>Founded by Jocheved, the atelier draws from the rich traditions of Venetian masquerade, translating centuries of craftsmanship into objects for the modern wearer. Gold, velvet, and shadow are our primary materials.</p>
+      <p>We make nothing in haste. Every collection is a meditation.</p>
+    </div>
+  </div>
+
+  <div class="gold-rule"></div>
+
+  <div class="values-grid">
+    <div class="value-card">
+      <p class="value-num">I</p>
+      <h3 class="value-title">Craft</h3>
+      <p class="value-text">Every piece is made by hand. No shortcuts. No compromises. Only the patience of those who understand that beauty takes time.</p>
+    </div>
+    <div class="value-card">
+      <p class="value-num">II</p>
+      <h3 class="value-title">Mystery</h3>
+      <p class="value-text">We believe in the power of the unseen. What is concealed is not hidden — it is protected, made sacred by its veil.</p>
+    </div>
+    <div class="value-card">
+      <p class="value-num">III</p>
+      <h3 class="value-title">Intention</h3>
+      <p class="value-text">Nothing we create is accidental. Each curve, each gilded edge, each shadow is placed with deliberate care and purpose.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">Veil Noir<small>By Jocheved</small></div>
+  <ul class="footer-links">
+    <li><a href="collections.html">Collections</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="shop.html">Shop</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <p class="footer-copy">© 2024 Veil Noir. All rights reserved.</p>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>
