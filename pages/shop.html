@@ -6,148 +6,83 @@
 <title>Shop — Veil Noir</title>
 <link rel="stylesheet" href="../css/style.css">
 <style>
-  .shop-section {
-    max-width: 1300px;
-    margin: 0 auto;
-    padding: 6rem 4rem 10rem;
-  }
+  .shop-section { max-width: 1300px; margin: 0 auto; padding: 6rem 4rem 10rem; }
   .shop-controls {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 5rem;
-    padding-bottom: 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 5rem; padding-bottom: 2rem;
     border-bottom: 0.5px solid rgba(201,168,76,0.15);
   }
-  .filter-bar { display: flex; gap: 2rem; }
+  .filter-bar { display: flex; gap: 0; border: 0.5px solid rgba(201,168,76,0.15); }
   .filter-btn {
-    font-size: 0.6rem;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: var(--cream-dim);
-    background: none;
-    border: none;
-    cursor: none;
-    padding: 0.5rem 0;
-    position: relative;
-    transition: color 0.3s ease;
+    font-size: 0.6rem; letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--cream-dim); background: none;
+    border: none; border-right: 0.5px solid rgba(201,168,76,0.15);
+    padding: 0.85rem 2rem; cursor: none; transition: all 0.3s ease;
   }
-  .filter-btn.active, .filter-btn:hover { color: var(--gold); }
-  .filter-btn.active::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 0.5px;
-    background: var(--gold);
-  }
+  .filter-btn:last-child { border-right: none; }
+  .filter-btn.active { background: var(--gold); color: var(--black); }
+  .filter-btn:hover:not(.active) { color: var(--gold); }
   .sort-select {
-    font-size: 0.6rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--cream-dim);
-    background: transparent;
+    font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--cream-dim); background: transparent;
     border: 0.5px solid rgba(201,168,76,0.2);
-    padding: 0.5rem 1rem;
-    cursor: none;
-    outline: none;
-    appearance: none;
+    padding: 0.5rem 1rem; cursor: none; outline: none; appearance: none;
   }
-  .shop-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.5px;
-  }
+  .shop-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5px; }
   .shop-card {
-    background: var(--charcoal);
-    position: relative;
-    overflow: hidden;
-    cursor: none;
-    transition: background 0.4s ease;
+    background: var(--charcoal); position: relative;
+    overflow: hidden; cursor: none; transition: background 0.4s ease;
   }
   .shop-card:hover { background: #1E1E1E; }
-  .shop-card:hover .shop-card-overlay { opacity: 1; }
+  .shop-card:hover .shop-overlay { opacity: 1; }
   .shop-card:hover .card-line { width: 100%; }
-  .shop-img {
-    width: 100%;
-    aspect-ratio: 3/4;
+  .shop-img { width: 100%; aspect-ratio: 3/4; position: relative; overflow: hidden; }
+  .shop-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .shop-img-placeholder {
+    width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
     background: #111;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
   }
-  .shop-img span {
-    font-size: 0.5rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: #2A2A2A;
+  .shop-img-placeholder span {
+    font-size: 0.5rem; letter-spacing: 0.3em;
+    text-transform: uppercase; color: #2A2A2A;
   }
-  .shop-card-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.4s ease;
+  .shop-overlay {
+    position: absolute; inset: 0; background: rgba(0,0,0,0.5);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.4s ease;
   }
-  .shop-card-info {
-    padding: 1.5rem 2rem 2rem;
-  }
+  .shop-info { padding: 1.5rem 1.5rem 2rem; }
   .shop-cat {
-    font-size: 0.5rem;
-    letter-spacing: 0.4em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 0.5rem;
+    font-size: 0.5rem; letter-spacing: 0.4em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem;
   }
   .shop-name {
-    font-family: 'Cinzel', serif;
-    font-size: 1rem;
-    font-weight: 400;
-    color: var(--cream);
-    letter-spacing: 0.04em;
-    margin-bottom: 0.5rem;
+    font-family: 'Cinzel', serif; font-size: 1rem;
+    font-weight: 400; color: var(--cream); letter-spacing: 0.04em; margin-bottom: 0.4rem;
   }
   .shop-price {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1rem;
-    font-style: italic;
-    color: var(--cream-dim);
+    font-family: 'Cormorant Garamond', serif; font-size: 1rem;
+    font-style: italic; color: var(--gold-light);
   }
+  .badge {
+    position: absolute; top: 1rem; left: 1rem;
+    font-size: 0.5rem; letter-spacing: 0.3em; text-transform: uppercase;
+    padding: 0.3rem 0.7rem;
+  }
+  .badge-new { background: var(--gold); color: var(--black); }
+  .badge-sold { background: #222; color: var(--cream-dim); border: 0.5px solid #333; }
   .card-line {
-    position: absolute;
-    bottom: 0; left: 0;
-    height: 1.5px; width: 0;
-    background: var(--gold);
-    transition: width 0.6s ease;
+    position: absolute; bottom: 0; left: 0;
+    height: 1.5px; width: 0; background: var(--gold); transition: width 0.6s ease;
   }
-  .badge-new {
-    position: absolute;
-    top: 1rem; left: 1rem;
-    font-size: 0.5rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--black);
-    background: var(--gold);
-    padding: 0.3rem 0.7rem;
+  .skeleton {
+    background: linear-gradient(90deg, #1a1a1a 25%, #222 50%, #1a1a1a 75%);
+    background-size: 200% 100%; animation: shimmer 1.5s infinite;
   }
-  .badge-sold {
-    position: absolute;
-    top: 1rem; left: 1rem;
-    font-size: 0.5rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--cream-dim);
-    background: #222;
-    padding: 0.3rem 0.7rem;
-    border: 0.5px solid #333;
-  }
+  @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
 </style>
 </head>
 <body>
-
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursor-ring"></div>
 
@@ -166,128 +101,28 @@
   <p class="page-eyebrow">Veil Noir</p>
   <h1 class="page-title">Shop</h1>
 </div>
-
 <div class="gold-rule"></div>
 
 <section class="shop-section">
   <div class="shop-controls">
     <div class="filter-bar">
-      <button class="filter-btn active">All</button>
-      <button class="filter-btn">Masks</button>
-      <button class="filter-btn">Veils</button>
-      <button class="filter-btn">Accessories</button>
-      <button class="filter-btn">Limited</button>
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="signature">Signature</button>
+      <button class="filter-btn" data-filter="seasonal">Seasonal</button>
+      <button class="filter-btn" data-filter="limited">Limited</button>
+      <button class="filter-btn" data-filter="bespoke">Bespoke</button>
     </div>
-    <select class="sort-select">
-      <option>Sort: Featured</option>
-      <option>Price: Low to High</option>
-      <option>Price: High to Low</option>
-      <option>Newest</option>
+    <select class="sort-select" id="sort-select">
+      <option value="default">Sort: Featured</option>
+      <option value="price-asc">Price: Low to High</option>
+      <option value="price-desc">Price: High to Low</option>
     </select>
   </div>
-
-  <div class="shop-grid">
-    <div class="shop-card">
-      <div class="shop-img">
-        <span>Image</span>
-        <div class="badge-new">New</div>
-        <div class="shop-card-overlay"><a href="#" class="btn-ghost" style="font-size:0.55rem; padding:0.75rem 1.5rem;">View Details</a></div>
-      </div>
-      <div class="shop-card-info">
-        <p class="shop-cat">Signature Mask</p>
-        <h3 class="shop-name">Masquerade Noir</h3>
-        <p class="shop-price">$480</p>
-      </div>
-      <div class="card-line"></div>
-    </div>
-
-    <div class="shop-card">
-      <div class="shop-img">
-        <span>Image</span>
-        <div class="shop-card-overlay"><a href="#" class="btn-ghost" style="font-size:0.55rem; padding:0.75rem 1.5rem;">View Details</a></div>
-      </div>
-      <div class="shop-card-info">
-        <p class="shop-cat">Seasonal</p>
-        <h3 class="shop-name">Crimson Dusk</h3>
-        <p class="shop-price">$320</p>
-      </div>
-      <div class="card-line"></div>
-    </div>
-
-    <div class="shop-card">
-      <div class="shop-img">
-        <span>Image</span>
-        <div class="badge-new">New</div>
-        <div class="shop-card-overlay"><a href="#" class="btn-ghost" style="font-size:0.55rem; padding:0.75rem 1.5rem;">View Details</a></div>
-      </div>
-      <div class="shop-card-info">
-        <p class="shop-cat">Limited</p>
-        <h3 class="shop-name">Ivory & Ash</h3>
-        <p class="shop-price">$560</p>
-      </div>
-      <div class="card-line"></div>
-    </div>
-
-    <div class="shop-card">
-      <div class="shop-img">
-        <span>Image</span>
-        <div class="badge-sold">Sold Out</div>
-        <div class="shop-card-overlay"><a href="#" class="btn-ghost" style="font-size:0.55rem; padding:0.75rem 1.5rem;">Notify Me</a></div>
-      </div>
-      <div class="shop-card-info">
-        <p class="shop-cat">Signature Mask</p>
-        <h3 class="shop-name">Velvet Veil</h3>
-        <p class="shop-price">$390</p>
-      </div>
-      <div class="card-line"></div>
-    </div>
-
-    <div class="shop-card">
-      <div class="shop-img">
-        <span>Image</span>
-        <div class="shop-card-overlay"><a href="#" class="btn-ghost" style="font-size:0.55rem; padding:0.75rem 1.5rem;">View Details</a></div>
-      </div>
-      <div class="shop-card-info">
-        <p class="shop-cat">Accessory</p>
-        <h3 class="shop-name">Noir Ribbon</h3>
-        <p class="shop-price">$85</p>
-      </div>
-      <div class="card-line"></div>
-    </div>
-
-    <div class="shop-card">
-      <div class="shop-img">
-        <span>Image</span>
-        <div class="shop-card-overlay"><a href="#" class="btn-ghost" style="font-size:0.55rem; padding:0.75rem 1.5rem;">View Details</a></div>
-      </div>
-      <div class="shop-card-info">
-        <p class="shop-cat">Seasonal</p>
-        <h3 class="shop-name">Midnight Bloom</h3>
-        <p class="shop-price">$410</p>
-      </div>
-      <div class="card-line"></div>
-    </div>
-
-    <div class="shop-card">
-      <div class="shop-img">
-        <span>Image</span>
-        <div class="shop-card-overlay"><a href="#" class="btn-ghost" style="font-size:0.55rem; padding:0.75rem 1.5rem;">View Details</a></div>
-      </div>
-      <div class="shop-card-info">
-        <p class="shop-cat">Accessory</p>
-        <h3 class="shop-name">Gold Plume</h3>
-        <p class="shop-price">$140</p>
-      </div>
-      <div class="card-line"></div>
-    </div>
-
-    <div class="shop-card" style="background:transparent; border: 0.5px solid rgba(201,168,76,0.1); display:flex; align-items:center; justify-content:center;">
-      <div style="text-align:center; padding:3rem;">
-        <p style="font-size:0.6rem; letter-spacing:0.4em; text-transform:uppercase; color:var(--gold-dim); margin-bottom:1.5rem;">Bespoke</p>
-        <p style="font-family:'Cinzel',serif; font-size:1.1rem; color:var(--cream); margin-bottom:1.5rem;">Commission<br>a Piece</p>
-        <a href="atelier.html" class="btn-ghost" style="font-size:0.55rem; padding:0.75rem 1.5rem;">Atelier →</a>
-      </div>
-    </div>
+  <div class="shop-grid" id="shop-grid">
+    <div class="shop-card"><div class="shop-img shop-img-placeholder skeleton" style="aspect-ratio:3/4;"></div></div>
+    <div class="shop-card"><div class="shop-img shop-img-placeholder skeleton" style="aspect-ratio:3/4;"></div></div>
+    <div class="shop-card"><div class="shop-img shop-img-placeholder skeleton" style="aspect-ratio:3/4;"></div></div>
+    <div class="shop-card"><div class="shop-img shop-img-placeholder skeleton" style="aspect-ratio:3/4;"></div></div>
   </div>
 </section>
 
@@ -303,5 +138,80 @@
 </footer>
 
 <script src="../js/main.js"></script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+  import { getFirestore, collection, getDocs }
+    from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey:"AIzaSyDyhOEIuRKB_Jhz_i3GSy7eEBIuSoomdB8",
+    authDomain:"veil-noir-test.firebaseapp.com",
+    projectId:"veil-noir-test",
+    storageBucket:"veil-noir-test.firebasestorage.app",
+    messagingSenderId:"746035497981",
+    appId:"1:746035497981:web:68aeb07c3919aef3036794"
+  };
+  const app = initializeApp(firebaseConfig);
+  const db  = getFirestore(app);
+
+  let allProducts = [];
+  function capitalize(s){ return s ? s.charAt(0).toUpperCase()+s.slice(1) : ''; }
+  function parsePrice(s){ return parseFloat((s||'0').replace(/[^0-9.]/g,'')) || 0; }
+
+  function renderGrid(products) {
+    const grid = document.getElementById('shop-grid');
+    if (!products.length) {
+      grid.innerHTML = `<div style="grid-column:span 4;text-align:center;padding:6rem 0;font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--cream-dim);">No products found.</div>`;
+      return;
+    }
+    grid.innerHTML = products.map(p => `
+      <div class="shop-card">
+        <div class="shop-img">
+          ${p.imageUrl
+            ? `<img src="${p.imageUrl}" alt="${p.name}">`
+            : `<div class="shop-img-placeholder"><span>Image</span></div>`}
+          ${p.avail === 'In Stock' ? '<span class="badge badge-new">New</span>' : ''}
+          ${p.avail === 'Sold Out' ? '<span class="badge badge-sold">Sold Out</span>' : ''}
+          <div class="shop-overlay">
+            <a href="collections.html" class="btn-ghost" style="font-size:0.55rem;padding:0.75rem 1.5rem;">
+              ${p.avail === 'Sold Out' ? 'Notify Me' : 'View Details'}
+            </a>
+          </div>
+        </div>
+        <div class="shop-info">
+          <p class="shop-cat">${capitalize(p.collection)}</p>
+          <h3 class="shop-name">${p.name}</h3>
+          <p class="shop-price">${p.price}</p>
+        </div>
+        <div class="card-line"></div>
+      </div>
+    `).join('');
+  }
+
+  function applyFiltersAndSort() {
+    const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+    const sort = document.getElementById('sort-select').value;
+    let filtered = activeFilter === 'all' ? [...allProducts] : allProducts.filter(p => p.collection === activeFilter);
+    if (sort === 'price-asc') filtered.sort((a,b) => parsePrice(a.price) - parsePrice(b.price));
+    if (sort === 'price-desc') filtered.sort((a,b) => parsePrice(b.price) - parsePrice(a.price));
+    renderGrid(filtered);
+  }
+
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      applyFiltersAndSort();
+    });
+  });
+  document.getElementById('sort-select').addEventListener('change', applyFiltersAndSort);
+
+  async function init() {
+    const snap = await getDocs(collection(db, 'products'));
+    snap.forEach(d => allProducts.push({ id: d.id, ...d.data() }));
+    renderGrid(allProducts);
+  }
+  init();
+</script>
 </body>
 </html>
