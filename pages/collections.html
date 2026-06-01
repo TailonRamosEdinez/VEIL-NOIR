@@ -8,94 +8,71 @@
 <style>
   .collections-page { padding: 6rem 4rem 10rem; max-width: 1300px; margin: 0 auto; }
   .filter-bar {
-    display: flex;
-    gap: 2rem;
-    margin-bottom: 5rem;
-    padding-bottom: 2rem;
-    border-bottom: 0.5px solid rgba(201,168,76,0.15);
+    display: flex; gap: 0; margin-bottom: 5rem;
+    padding-bottom: 2rem; border-bottom: 0.5px solid rgba(201,168,76,0.15);
+    border: 0.5px solid rgba(201,168,76,0.15); width: fit-content;
   }
   .filter-btn {
-    font-size: 0.6rem;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: var(--cream-dim);
-    background: none;
-    border: none;
-    cursor: none;
-    padding: 0.5rem 0;
-    position: relative;
-    transition: color 0.3s ease;
+    font-size: 0.6rem; letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--cream-dim); background: none;
+    border: none; border-right: 0.5px solid rgba(201,168,76,0.15);
+    padding: 0.85rem 2rem; cursor: none; transition: all 0.3s ease;
   }
-  .filter-btn.active, .filter-btn:hover { color: var(--gold); }
-  .filter-btn.active::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 0.5px;
-    background: var(--gold);
-  }
-  .products-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5px;
-  }
+  .filter-btn:last-child { border-right: none; }
+  .filter-btn.active { background: var(--gold); color: var(--black); }
+  .filter-btn:hover:not(.active) { color: var(--gold); }
+  .products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px; }
   .product-card {
-    background: var(--charcoal);
-    padding: 3rem;
-    position: relative;
-    overflow: hidden;
-    cursor: none;
-    transition: background 0.4s ease;
+    background: var(--charcoal); position: relative;
+    overflow: hidden; cursor: none; transition: background 0.4s ease;
   }
   .product-card:hover { background: #1E1E1E; }
   .product-card:hover .card-line { width: 100%; }
-  .product-placeholder {
-    width: 100%;
-    aspect-ratio: 3/2;
-    background: #111;
-    margin-bottom: 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .product-img {
+    width: 100%; aspect-ratio: 3/2; object-fit: cover; display: block;
   }
-  .product-placeholder span {
-    font-size: 0.55rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: #2A2A2A;
+  .product-img-placeholder {
+    width: 100%; aspect-ratio: 3/2; background: #111;
+    display: flex; align-items: center; justify-content: center;
   }
+  .product-img-placeholder span {
+    font-size: 0.55rem; letter-spacing: 0.3em;
+    text-transform: uppercase; color: #2A2A2A;
+  }
+  .product-info { padding: 2rem 2.5rem 3rem; }
   .product-category {
-    font-size: 0.55rem;
-    letter-spacing: 0.4em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 0.75rem;
+    font-size: 0.55rem; letter-spacing: 0.4em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem;
   }
   .product-name {
-    font-family: 'Cinzel', serif;
-    font-size: 1.4rem;
-    font-weight: 400;
-    color: var(--cream);
-    letter-spacing: 0.04em;
-    margin-bottom: 0.75rem;
+    font-family: 'Cinzel', serif; font-size: 1.4rem;
+    font-weight: 400; color: var(--cream); letter-spacing: 0.04em; margin-bottom: 0.75rem;
   }
   .product-price {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.1rem;
-    font-style: italic;
-    color: var(--cream-dim);
+    font-family: 'Cormorant Garamond', serif; font-size: 1.1rem;
+    font-style: italic; color: var(--gold-light);
+  }
+  .product-avail {
+    font-size: 0.5rem; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--cream-dim); margin-top: 0.5rem;
   }
   .card-line {
-    position: absolute;
-    bottom: 0; left: 0;
-    height: 1.5px; width: 0;
-    background: var(--gold);
-    transition: width 0.6s ease;
+    position: absolute; bottom: 0; left: 0;
+    height: 1.5px; width: 0; background: var(--gold); transition: width 0.6s ease;
+  }
+  .skeleton {
+    background: linear-gradient(90deg, #1a1a1a 25%, #222 50%, #1a1a1a 75%);
+    background-size: 200% 100%; animation: shimmer 1.5s infinite;
+  }
+  @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+  .empty-msg {
+    grid-column: span 3; text-align: center; padding: 6rem 0;
+    font-family: 'Cormorant Garamond', serif; font-size: 1.2rem;
+    font-style: italic; color: var(--cream-dim);
   }
 </style>
 </head>
 <body>
-
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursor-ring"></div>
 
@@ -114,61 +91,20 @@
   <p class="page-eyebrow">By Jocheved</p>
   <h1 class="page-title">Collections</h1>
 </div>
-
 <div class="gold-rule"></div>
 
 <section class="collections-page">
   <div class="filter-bar">
-    <button class="filter-btn active">All</button>
-    <button class="filter-btn">Signature</button>
-    <button class="filter-btn">Seasonal</button>
-    <button class="filter-btn">Bespoke</button>
-    <button class="filter-btn">Limited</button>
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="signature">Signature</button>
+    <button class="filter-btn" data-filter="seasonal">Seasonal</button>
+    <button class="filter-btn" data-filter="limited">Limited</button>
+    <button class="filter-btn" data-filter="bespoke">Bespoke</button>
   </div>
-
-  <div class="products-grid">
-    <div class="product-card">
-      <div class="product-placeholder"><span>Image</span></div>
-      <p class="product-category">Signature</p>
-      <h3 class="product-name">Masquerade Noir</h3>
-      <p class="product-price">From $480</p>
-      <div class="card-line"></div>
-    </div>
-    <div class="product-card">
-      <div class="product-placeholder"><span>Image</span></div>
-      <p class="product-category">Seasonal</p>
-      <h3 class="product-name">Crimson Dusk</h3>
-      <p class="product-price">From $320</p>
-      <div class="card-line"></div>
-    </div>
-    <div class="product-card">
-      <div class="product-placeholder"><span>Image</span></div>
-      <p class="product-category">Limited</p>
-      <h3 class="product-name">Ivory & Ash</h3>
-      <p class="product-price">From $560</p>
-      <div class="card-line"></div>
-    </div>
-    <div class="product-card">
-      <div class="product-placeholder"><span>Image</span></div>
-      <p class="product-category">Bespoke</p>
-      <h3 class="product-name">Atelier Private</h3>
-      <p class="product-price">On request</p>
-      <div class="card-line"></div>
-    </div>
-    <div class="product-card">
-      <div class="product-placeholder"><span>Image</span></div>
-      <p class="product-category">Signature</p>
-      <h3 class="product-name">Velvet Veil</h3>
-      <p class="product-price">From $390</p>
-      <div class="card-line"></div>
-    </div>
-    <div class="product-card">
-      <div class="product-placeholder"><span>Image</span></div>
-      <p class="product-category">Seasonal</p>
-      <h3 class="product-name">Midnight Bloom</h3>
-      <p class="product-price">From $410</p>
-      <div class="card-line"></div>
-    </div>
+  <div class="products-grid" id="products-grid">
+    <div class="product-card"><div class="product-img-placeholder skeleton"></div></div>
+    <div class="product-card"><div class="product-img-placeholder skeleton"></div></div>
+    <div class="product-card"><div class="product-img-placeholder skeleton"></div></div>
   </div>
 </section>
 
@@ -184,5 +120,64 @@
 </footer>
 
 <script src="../js/main.js"></script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+  import { getFirestore, collection, getDocs, query, where }
+    from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey:"AIzaSyDyhOEIuRKB_Jhz_i3GSy7eEBIuSoomdB8",
+    authDomain:"veil-noir-test.firebaseapp.com",
+    projectId:"veil-noir-test",
+    storageBucket:"veil-noir-test.firebasestorage.app",
+    messagingSenderId:"746035497981",
+    appId:"1:746035497981:web:68aeb07c3919aef3036794"
+  };
+  const app = initializeApp(firebaseConfig);
+  const db  = getFirestore(app);
+
+  let allProducts = [];
+
+  function capitalize(s){ return s ? s.charAt(0).toUpperCase()+s.slice(1) : ''; }
+
+  function renderGrid(products) {
+    const grid = document.getElementById('products-grid');
+    if (!products.length) {
+      grid.innerHTML = `<div class="empty-msg">No products in this collection yet.</div>`;
+      return;
+    }
+    grid.innerHTML = products.map(p => `
+      <div class="product-card">
+        ${p.imageUrl
+          ? `<img src="${p.imageUrl}" alt="${p.name}" class="product-img">`
+          : `<div class="product-img-placeholder"><span>Image</span></div>`}
+        <div class="product-info">
+          <p class="product-category">${capitalize(p.collection)}</p>
+          <h3 class="product-name">${p.name}</h3>
+          <p class="product-price">${p.price}</p>
+          <p class="product-avail">${p.avail}</p>
+        </div>
+        <div class="card-line"></div>
+      </div>
+    `).join('');
+  }
+
+  async function loadAll() {
+    const snap = await getDocs(collection(db, 'products'));
+    snap.forEach(d => allProducts.push({ id: d.id, ...d.data() }));
+    renderGrid(allProducts);
+  }
+
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      renderGrid(f === 'all' ? allProducts : allProducts.filter(p => p.collection === f));
+    });
+  });
+
+  loadAll();
+</script>
 </body>
 </html>
