@@ -1,0 +1,1134 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Admin — Veil Noir</title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Jost:wght@200;300;400&family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            *,
+            *::before,
+            *::after {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            :root {
+                --gold: #c9a84c;
+                --gold-light: #e8c97a;
+                --gold-dim: #8a6d2f;
+                --black: #080808;
+                --charcoal: #1a1a1a;
+                --charcoal2: #222;
+                --cream: #f5edd6;
+                --cream-dim: #9a8e75;
+                --red: #8b3a3a;
+                --green: #3a6b4a;
+            }
+
+            body {
+                background: var(--black);
+                color: var(--cream);
+                font-family: "Jost", sans-serif;
+                font-weight: 300;
+                min-height: 100vh;
+            }
+
+            /* ── LAYOUT ── */
+            .admin-wrap {
+                display: grid;
+                grid-template-columns: 260px 1fr;
+                min-height: 100vh;
+            }
+
+            /* ── SIDEBAR ── */
+            .sidebar {
+                background: var(--charcoal);
+                border-right: 0.5px solid rgba(201, 168, 76, 0.12);
+                padding: 3rem 2rem;
+                display: flex;
+                flex-direction: column;
+                gap: 3rem;
+                position: sticky;
+                top: 0;
+                height: 100vh;
+                overflow-y: auto;
+            }
+
+            .sidebar-brand {
+                font-family: "Cinzel", serif;
+                font-size: 1.1rem;
+                color: var(--gold-light);
+                letter-spacing: 0.1em;
+            }
+            .sidebar-brand small {
+                display: block;
+                font-family: "Jost", sans-serif;
+                font-size: 0.5rem;
+                letter-spacing: 0.4em;
+                text-transform: uppercase;
+                color: var(--gold-dim);
+                margin-top: 0.3rem;
+            }
+
+            .sidebar-nav {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            .sidebar-nav-item {
+                font-size: 0.6rem;
+                letter-spacing: 0.3em;
+                text-transform: uppercase;
+                color: var(--cream-dim);
+                padding: 0.75rem 1rem;
+                cursor: pointer;
+                border-left: 2px solid transparent;
+                transition: all 0.3s ease;
+            }
+            .sidebar-nav-item:hover {
+                color: var(--gold);
+                border-left-color: var(--gold-dim);
+            }
+            .sidebar-nav-item.active {
+                color: var(--gold);
+                border-left-color: var(--gold);
+                background: rgba(201, 168, 76, 0.05);
+            }
+
+            .sidebar-back {
+                margin-top: auto;
+                font-size: 0.55rem;
+                letter-spacing: 0.3em;
+                text-transform: uppercase;
+                color: var(--cream-dim);
+                text-decoration: none;
+                transition: color 0.3s ease;
+            }
+            .sidebar-back:hover {
+                color: var(--gold);
+            }
+
+            /* ── MAIN ── */
+            .admin-main {
+                padding: 3rem 4rem;
+                overflow-y: auto;
+            }
+
+            .admin-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 3rem;
+                padding-bottom: 2rem;
+                border-bottom: 0.5px solid rgba(201, 168, 76, 0.15);
+            }
+
+            .admin-title {
+                font-family: "Cinzel", serif;
+                font-size: 1.8rem;
+                font-weight: 400;
+                color: var(--cream);
+                letter-spacing: 0.06em;
+            }
+
+            .admin-subtitle {
+                font-size: 0.6rem;
+                letter-spacing: 0.3em;
+                text-transform: uppercase;
+                color: var(--gold-dim);
+                margin-top: 0.4rem;
+            }
+
+            /* ── PANELS ── */
+            .panel {
+                display: none;
+            }
+            .panel.active {
+                display: block;
+            }
+
+            /* ── FORM ── */
+            .form-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 2rem;
+                margin-bottom: 2rem;
+            }
+
+            .form-group {
+                display: flex;
+                flex-direction: column;
+                gap: 0.6rem;
+            }
+            .form-group.full {
+                grid-column: span 2;
+            }
+
+            .form-label {
+                font-size: 0.55rem;
+                letter-spacing: 0.35em;
+                text-transform: uppercase;
+                color: var(--gold-dim);
+            }
+
+            .form-input,
+            .form-select,
+            .form-textarea {
+                background: var(--charcoal2);
+                border: 0.5px solid rgba(201, 168, 76, 0.15);
+                padding: 0.85rem 1rem;
+                color: var(--cream);
+                font-family: "Jost", sans-serif;
+                font-size: 0.85rem;
+                font-weight: 300;
+                outline: none;
+                width: 100%;
+                transition: border-color 0.3s ease;
+            }
+            .form-input:focus,
+            .form-select:focus,
+            .form-textarea:focus {
+                border-color: var(--gold-dim);
+            }
+            .form-select {
+                appearance: none;
+                cursor: pointer;
+            }
+            .form-textarea {
+                resize: vertical;
+                min-height: 100px;
+            }
+
+            /* ── IMAGE UPLOAD ── */
+            .upload-area {
+                border: 0.5px dashed rgba(201, 168, 76, 0.25);
+                padding: 3rem;
+                text-align: center;
+                cursor: pointer;
+                transition:
+                    border-color 0.3s ease,
+                    background 0.3s ease;
+                position: relative;
+                background: var(--charcoal2);
+            }
+            .upload-area:hover,
+            .upload-area.drag-over {
+                border-color: var(--gold);
+                background: rgba(201, 168, 76, 0.03);
+            }
+            .upload-area input[type="file"] {
+                position: absolute;
+                inset: 0;
+                opacity: 0;
+                cursor: pointer;
+                width: 100%;
+                height: 100%;
+            }
+            .upload-icon {
+                font-size: 2rem;
+                color: var(--gold-dim);
+                margin-bottom: 1rem;
+            }
+            .upload-text {
+                font-size: 0.6rem;
+                letter-spacing: 0.3em;
+                text-transform: uppercase;
+                color: var(--cream-dim);
+            }
+            .upload-sub {
+                font-size: 0.55rem;
+                color: var(--gold-dim);
+                margin-top: 0.5rem;
+                letter-spacing: 0.2em;
+            }
+
+            /* Preview da imagem */
+            .image-preview-wrap {
+                display: none;
+                margin-top: 1.5rem;
+                position: relative;
+                width: 160px;
+            }
+            .image-preview-wrap img {
+                width: 160px;
+                height: 160px;
+                object-fit: cover;
+                border: 0.5px solid rgba(201, 168, 76, 0.2);
+            }
+            .preview-remove {
+                position: absolute;
+                top: -8px;
+                right: -8px;
+                width: 22px;
+                height: 22px;
+                background: var(--red);
+                color: white;
+                border: none;
+                cursor: pointer;
+                font-size: 0.7rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            /* Upload progress */
+            .upload-progress {
+                display: none;
+                margin-top: 1rem;
+            }
+            .progress-bar-wrap {
+                background: var(--charcoal2);
+                height: 2px;
+                width: 100%;
+                margin-top: 0.5rem;
+            }
+            .progress-bar {
+                height: 2px;
+                background: var(--gold);
+                width: 0%;
+                transition: width 0.3s ease;
+            }
+            .progress-text {
+                font-size: 0.55rem;
+                letter-spacing: 0.3em;
+                text-transform: uppercase;
+                color: var(--gold-dim);
+            }
+
+            /* ── BUTTONS ── */
+            .btn {
+                font-family: "Jost", sans-serif;
+                font-size: 0.6rem;
+                font-weight: 300;
+                letter-spacing: 0.35em;
+                text-transform: uppercase;
+                border: none;
+                padding: 0.9rem 2rem;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+            .btn-gold {
+                background: var(--gold);
+                color: var(--black);
+            }
+            .btn-gold:hover {
+                background: var(--gold-light);
+            }
+            .btn-outline {
+                background: transparent;
+                color: var(--gold);
+                border: 0.5px solid var(--gold-dim);
+            }
+            .btn-outline:hover {
+                border-color: var(--gold);
+            }
+            .btn-danger {
+                background: var(--red);
+                color: white;
+            }
+            .btn-danger:hover {
+                background: #a04040;
+            }
+            .btn:disabled {
+                opacity: 0.4;
+                cursor: not-allowed;
+            }
+
+            .form-actions {
+                display: flex;
+                gap: 1rem;
+                margin-top: 2rem;
+                padding-top: 2rem;
+                border-top: 0.5px solid rgba(201, 168, 76, 0.1);
+            }
+
+            /* ── TOAST ── */
+            .toast {
+                position: fixed;
+                bottom: 2rem;
+                right: 2rem;
+                padding: 1rem 2rem;
+                font-size: 0.6rem;
+                letter-spacing: 0.3em;
+                text-transform: uppercase;
+                z-index: 9999;
+                opacity: 0;
+                transform: translateY(10px);
+                transition: all 0.4s ease;
+                pointer-events: none;
+            }
+            .toast.show {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            .toast.success {
+                background: var(--green);
+                color: white;
+            }
+            .toast.error {
+                background: var(--red);
+                color: white;
+            }
+
+            /* ── PRODUCTS LIST ── */
+            .products-table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            .products-table th {
+                font-size: 0.5rem;
+                letter-spacing: 0.4em;
+                text-transform: uppercase;
+                color: var(--gold-dim);
+                text-align: left;
+                padding: 1rem;
+                border-bottom: 0.5px solid rgba(201, 168, 76, 0.15);
+                font-weight: 300;
+            }
+            .products-table td {
+                padding: 1.2rem 1rem;
+                border-bottom: 0.5px solid rgba(255, 255, 255, 0.04);
+                font-size: 0.8rem;
+                color: var(--cream-dim);
+                vertical-align: middle;
+            }
+            .products-table tr:hover td {
+                background: rgba(201, 168, 76, 0.02);
+            }
+            .product-thumb-cell {
+                width: 60px;
+                height: 60px;
+                object-fit: cover;
+                border: 0.5px solid rgba(201, 168, 76, 0.15);
+            }
+            .product-thumb-placeholder {
+                width: 60px;
+                height: 60px;
+                background: var(--charcoal2);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.4rem;
+                letter-spacing: 0.2em;
+                color: #333;
+                text-transform: uppercase;
+            }
+            .badge {
+                font-size: 0.45rem;
+                letter-spacing: 0.3em;
+                text-transform: uppercase;
+                padding: 0.3rem 0.7rem;
+                background: rgba(201, 168, 76, 0.1);
+                color: var(--gold);
+                border: 0.5px solid rgba(201, 168, 76, 0.2);
+            }
+            .td-actions {
+                display: flex;
+                gap: 0.5rem;
+            }
+            .btn-sm {
+                font-size: 0.5rem;
+                letter-spacing: 0.25em;
+                text-transform: uppercase;
+                padding: 0.4rem 0.8rem;
+                border: none;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            .btn-sm-edit {
+                background: rgba(201, 168, 76, 0.1);
+                color: var(--gold);
+            }
+            .btn-sm-edit:hover {
+                background: rgba(201, 168, 76, 0.2);
+            }
+            .btn-sm-del {
+                background: rgba(139, 58, 58, 0.15);
+                color: #c06060;
+            }
+            .btn-sm-del:hover {
+                background: rgba(139, 58, 58, 0.3);
+            }
+
+            .empty-state {
+                text-align: center;
+                padding: 6rem 2rem;
+                color: var(--cream-dim);
+            }
+            .empty-state p {
+                font-size: 0.6rem;
+                letter-spacing: 0.3em;
+                text-transform: uppercase;
+            }
+
+            /* ── STATS ── */
+            .stats-grid {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 1.5px;
+                margin-bottom: 4rem;
+            }
+            .stat-card {
+                background: var(--charcoal);
+                padding: 2rem;
+            }
+            .stat-label {
+                font-size: 0.5rem;
+                letter-spacing: 0.4em;
+                text-transform: uppercase;
+                color: var(--gold-dim);
+                margin-bottom: 1rem;
+            }
+            .stat-value {
+                font-family: "Cinzel", serif;
+                font-size: 2rem;
+                font-weight: 400;
+                color: var(--gold-light);
+            }
+
+            /* Loading spinner */
+            .loading {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                color: var(--cream-dim);
+                font-size: 0.6rem;
+                letter-spacing: 0.3em;
+                text-transform: uppercase;
+                padding: 3rem 0;
+            }
+            .spinner {
+                width: 16px;
+                height: 16px;
+                border: 1.5px solid rgba(201, 168, 76, 0.2);
+                border-top-color: var(--gold);
+                border-radius: 50%;
+                animation: spin 0.8s linear infinite;
+            }
+            @keyframes spin {
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="admin-wrap">
+            <!-- SIDEBAR -->
+            <aside class="sidebar">
+                <div class="sidebar-brand">
+                    Veil Noir
+                    <small>Admin Panel</small>
+                </div>
+
+                <nav class="sidebar-nav">
+                    <div class="sidebar-nav-item active" data-panel="dashboard">
+                        Dashboard
+                    </div>
+                    <div class="sidebar-nav-item" data-panel="add-product">
+                        Add Product
+                    </div>
+                    <div class="sidebar-nav-item" data-panel="products">
+                        All Products
+                    </div>
+                </nav>
+
+                <a href="../index.html" class="sidebar-back">← Back to Site</a>
+            </aside>
+
+            <!-- MAIN -->
+            <main class="admin-main">
+                <!-- DASHBOARD -->
+                <div class="panel active" id="panel-dashboard">
+                    <div class="admin-header">
+                        <div>
+                            <h1 class="admin-title">Dashboard</h1>
+                            <p class="admin-subtitle">
+                                Veil Noir — By Jocheved
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <p class="stat-label">Total Products</p>
+                            <p class="stat-value" id="stat-total">—</p>
+                        </div>
+                        <div class="stat-card">
+                            <p class="stat-label">Signature</p>
+                            <p class="stat-value" id="stat-signature">—</p>
+                        </div>
+                        <div class="stat-card">
+                            <p class="stat-label">Limited</p>
+                            <p class="stat-value" id="stat-limited">—</p>
+                        </div>
+                        <div class="stat-card">
+                            <p class="stat-label">In Stock</p>
+                            <p class="stat-value" id="stat-instock">—</p>
+                        </div>
+                    </div>
+
+                    <div
+                        style="
+                            text-align: center;
+                            padding: 4rem 0;
+                            border: 0.5px solid rgba(201, 168, 76, 0.1);
+                        "
+                    >
+                        <p
+                            style="
+                                font-size: 0.6rem;
+                                letter-spacing: 0.4em;
+                                text-transform: uppercase;
+                                color: var(--gold-dim);
+                                margin-bottom: 1.5rem;
+                            "
+                        >
+                            Quick Action
+                        </p>
+                        <button
+                            class="btn btn-gold"
+                            onclick="switchPanel('add-product')"
+                        >
+                            + Add New Product
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ADD PRODUCT -->
+                <div class="panel" id="panel-add-product">
+                    <div class="admin-header">
+                        <div>
+                            <h1 class="admin-title">Add Product</h1>
+                            <p class="admin-subtitle">
+                                New item to the collection
+                            </p>
+                        </div>
+                    </div>
+
+                    <form id="product-form" autocomplete="off">
+                        <!-- Image Upload -->
+                        <div
+                            class="form-group full"
+                            style="margin-bottom: 2rem"
+                        >
+                            <label class="form-label">Product Image</label>
+                            <div class="upload-area" id="upload-area">
+                                <input
+                                    type="file"
+                                    id="image-input"
+                                    accept="image/*"
+                                />
+                                <div class="upload-icon">↑</div>
+                                <p class="upload-text">
+                                    Click or drag image here
+                                </p>
+                                <p class="upload-sub">
+                                    JPG, PNG, WEBP — max 10MB
+                                </p>
+                            </div>
+                            <div class="image-preview-wrap" id="preview-wrap">
+                                <img id="preview-img" src="" alt="preview" />
+                                <button
+                                    type="button"
+                                    class="preview-remove"
+                                    id="remove-img"
+                                >
+                                    ✕
+                                </button>
+                            </div>
+                            <div class="upload-progress" id="upload-progress">
+                                <p class="progress-text">
+                                    Uploading to Cloudinary...
+                                </p>
+                                <div class="progress-bar-wrap">
+                                    <div
+                                        class="progress-bar"
+                                        id="progress-bar"
+                                    ></div>
+                                </div>
+                            </div>
+                            <input type="hidden" id="image-url" value="" />
+                        </div>
+
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Product Name</label>
+                                <input
+                                    type="text"
+                                    class="form-input"
+                                    id="prod-name"
+                                    placeholder="Masquerade Noir"
+                                    required
+                                />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Price</label>
+                                <input
+                                    type="text"
+                                    class="form-input"
+                                    id="prod-price"
+                                    placeholder="$480"
+                                    required
+                                />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Collection</label>
+                                <select
+                                    class="form-select"
+                                    id="prod-collection"
+                                >
+                                    <option value="signature">Signature</option>
+                                    <option value="seasonal">Seasonal</option>
+                                    <option value="limited">Limited</option>
+                                    <option value="bespoke">Bespoke</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Availability</label>
+                                <select class="form-select" id="prod-avail">
+                                    <option value="In Stock">In Stock</option>
+                                    <option value="Last units">
+                                        Last Units
+                                    </option>
+                                    <option value="Sold Out">Sold Out</option>
+                                    <option value="By appointment">
+                                        By Appointment
+                                    </option>
+                                    <option value="On request">
+                                        On Request
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Material</label>
+                                <input
+                                    type="text"
+                                    class="form-input"
+                                    id="prod-material"
+                                    placeholder="24k Gold Leaf, Velvet"
+                                />
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Origin</label>
+                                <input
+                                    type="text"
+                                    class="form-input"
+                                    id="prod-origin"
+                                    placeholder="Venice, Italy"
+                                />
+                            </div>
+                            <div class="form-group full">
+                                <label class="form-label">Description</label>
+                                <textarea
+                                    class="form-textarea"
+                                    id="prod-desc"
+                                    placeholder="Write a short, elegant description of the piece..."
+                                ></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button
+                                type="submit"
+                                class="btn btn-gold"
+                                id="submit-btn"
+                            >
+                                Save Product
+                            </button>
+                            <button
+                                type="button"
+                                class="btn btn-outline"
+                                onclick="resetForm()"
+                            >
+                                Clear
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- ALL PRODUCTS -->
+                <div class="panel" id="panel-products">
+                    <div class="admin-header">
+                        <div>
+                            <h1 class="admin-title">All Products</h1>
+                            <p class="admin-subtitle" id="products-count">
+                                Loading...
+                            </p>
+                        </div>
+                        <button
+                            class="btn btn-gold"
+                            onclick="switchPanel('add-product')"
+                        >
+                            + Add Product
+                        </button>
+                    </div>
+
+                    <div id="products-loading" class="loading">
+                        <div class="spinner"></div>
+                        Loading products...
+                    </div>
+
+                    <table
+                        class="products-table"
+                        id="products-table"
+                        style="display: none"
+                    >
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Collection</th>
+                                <th>Price</th>
+                                <th>Availability</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="products-tbody"></tbody>
+                    </table>
+
+                    <div
+                        class="empty-state"
+                        id="empty-state"
+                        style="display: none"
+                    >
+                        <p>No products yet. Add your first piece.</p>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- TOAST -->
+        <div class="toast" id="toast"></div>
+
+        <!-- FIREBASE + LOGIC -->
+        <script type="module">
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+            import {
+                getFirestore,
+                collection,
+                addDoc,
+                getDocs,
+                deleteDoc,
+                doc,
+                updateDoc,
+                serverTimestamp,
+            } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+
+            const firebaseConfig = {
+                apiKey: "AIzaSyDyhOEIuRKB_Jhz_i3GSy7eEBIuSoomdB8",
+                authDomain: "veil-noir-test.firebaseapp.com",
+                projectId: "veil-noir-test",
+                storageBucket: "veil-noir-test.firebasestorage.app",
+                messagingSenderId: "746035497981",
+                appId: "1:746035497981:web:68aeb07c3919aef3036794",
+            };
+
+            const CLOUDINARY = {
+                cloudName: "do9ft0hsq",
+                uploadPreset: "veil-noir-upload",
+                uploadUrl:
+                    "https://api.cloudinary.com/v1_1/do9ft0hsq/image/upload",
+            };
+
+            const app = initializeApp(firebaseConfig);
+            const db = getFirestore(app);
+
+            // ── SIDEBAR NAVIGATION ──
+            window.switchPanel = function (panelId) {
+                document
+                    .querySelectorAll(".panel")
+                    .forEach((p) => p.classList.remove("active"));
+                document
+                    .querySelectorAll(".sidebar-nav-item")
+                    .forEach((n) => n.classList.remove("active"));
+                document
+                    .getElementById("panel-" + panelId)
+                    .classList.add("active");
+                document
+                    .querySelector(`[data-panel="${panelId}"]`)
+                    .classList.add("active");
+                if (panelId === "products") loadProducts();
+                if (panelId === "dashboard") loadStats();
+            };
+
+            document.querySelectorAll(".sidebar-nav-item").forEach((item) => {
+                item.addEventListener("click", () =>
+                    switchPanel(item.dataset.panel),
+                );
+            });
+
+            // ── TOAST ──
+            function showToast(msg, type = "success") {
+                const t = document.getElementById("toast");
+                t.textContent = msg;
+                t.className = `toast ${type} show`;
+                setTimeout(() => t.classList.remove("show"), 3500);
+            }
+
+            // ── IMAGE UPLOAD: preview local ──
+            const imageInput = document.getElementById("image-input");
+            const previewWrap = document.getElementById("preview-wrap");
+            const previewImg = document.getElementById("preview-img");
+            const removeBtn = document.getElementById("remove-img");
+            const imageUrlInput = document.getElementById("image-url");
+            const uploadArea = document.getElementById("upload-area");
+
+            imageInput.addEventListener("change", (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = (ev) => {
+                    previewImg.src = ev.target.result;
+                    previewWrap.style.display = "block";
+                };
+                reader.readAsDataURL(file);
+            });
+
+            removeBtn.addEventListener("click", () => {
+                imageInput.value = "";
+                previewImg.src = "";
+                previewWrap.style.display = "none";
+                imageUrlInput.value = "";
+            });
+
+            // Drag and drop
+            uploadArea.addEventListener("dragover", (e) => {
+                e.preventDefault();
+                uploadArea.classList.add("drag-over");
+            });
+            uploadArea.addEventListener("dragleave", () =>
+                uploadArea.classList.remove("drag-over"),
+            );
+            uploadArea.addEventListener("drop", (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove("drag-over");
+                const file = e.dataTransfer.files[0];
+                if (file) {
+                    imageInput.files = e.dataTransfer.files;
+                    const reader = new FileReader();
+                    reader.onload = (ev) => {
+                        previewImg.src = ev.target.result;
+                        previewWrap.style.display = "block";
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // ── UPLOAD CLOUDINARY ──
+            async function uploadToCloudinary(file) {
+                const progressWrap = document.getElementById("upload-progress");
+                const progressBar = document.getElementById("progress-bar");
+                progressWrap.style.display = "block";
+
+                return new Promise((resolve, reject) => {
+                    const formData = new FormData();
+                    formData.append("file", file);
+                    formData.append("upload_preset", CLOUDINARY.uploadPreset);
+                    formData.append("folder", "veil-noir");
+
+                    const xhr = new XMLHttpRequest();
+                    xhr.open("POST", CLOUDINARY.uploadUrl);
+
+                    xhr.upload.onprogress = (e) => {
+                        if (e.lengthComputable) {
+                            const pct = Math.round((e.loaded / e.total) * 100);
+                            progressBar.style.width = pct + "%";
+                        }
+                    };
+
+                    xhr.onload = () => {
+                        progressWrap.style.display = "none";
+                        progressBar.style.width = "0%";
+                        if (xhr.status === 200) {
+                            const res = JSON.parse(xhr.responseText);
+                            resolve(res.secure_url);
+                        } else {
+                            reject(new Error("Upload failed"));
+                        }
+                    };
+
+                    xhr.onerror = () => reject(new Error("Network error"));
+                    xhr.send(formData);
+                });
+            }
+
+            // ── SAVE PRODUCT (Firestore) ──
+            document
+                .getElementById("product-form")
+                .addEventListener("submit", async (e) => {
+                    e.preventDefault();
+                    const submitBtn = document.getElementById("submit-btn");
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = "Saving...";
+
+                    try {
+                        let imageUrl = imageUrlInput.value;
+
+                        // Upload imagem se tiver arquivo selecionado
+                        if (imageInput.files[0]) {
+                            imageUrl = await uploadToCloudinary(
+                                imageInput.files[0],
+                            );
+                            imageUrlInput.value = imageUrl;
+                        }
+
+                        const product = {
+                            name: document
+                                .getElementById("prod-name")
+                                .value.trim(),
+                            price: document
+                                .getElementById("prod-price")
+                                .value.trim(),
+                            collection:
+                                document.getElementById("prod-collection")
+                                    .value,
+                            avail: document.getElementById("prod-avail").value,
+                            material: document
+                                .getElementById("prod-material")
+                                .value.trim(),
+                            origin: document
+                                .getElementById("prod-origin")
+                                .value.trim(),
+                            desc: document
+                                .getElementById("prod-desc")
+                                .value.trim(),
+                            imageUrl: imageUrl || "",
+                            createdAt: serverTimestamp(),
+                        };
+
+                        await addDoc(collection(db, "products"), product);
+                        showToast("Product saved successfully");
+                        resetForm();
+                    } catch (err) {
+                        console.error(err);
+                        showToast("Error saving product", "error");
+                    } finally {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = "Save Product";
+                    }
+                });
+
+            // ── RESET FORM ──
+            window.resetForm = function () {
+                document.getElementById("product-form").reset();
+                previewImg.src = "";
+                previewWrap.style.display = "none";
+                imageUrlInput.value = "";
+            };
+
+            // ── LOAD PRODUCTS ──
+            let allProducts = [];
+
+            async function loadProducts() {
+                document.getElementById("products-loading").style.display =
+                    "flex";
+                document.getElementById("products-table").style.display =
+                    "none";
+                document.getElementById("empty-state").style.display = "none";
+
+                try {
+                    const snapshot = await getDocs(collection(db, "products"));
+                    allProducts = [];
+                    snapshot.forEach((d) =>
+                        allProducts.push({ id: d.id, ...d.data() }),
+                    );
+
+                    document.getElementById("products-loading").style.display =
+                        "none";
+                    document.getElementById("products-count").textContent =
+                        `${allProducts.length} product${allProducts.length !== 1 ? "s" : ""}`;
+
+                    if (allProducts.length === 0) {
+                        document.getElementById("empty-state").style.display =
+                            "block";
+                        return;
+                    }
+
+                    renderProducts(allProducts);
+                } catch (err) {
+                    console.error(err);
+                    showToast("Error loading products", "error");
+                }
+            }
+
+            function renderProducts(products) {
+                const tbody = document.getElementById("products-tbody");
+                tbody.innerHTML = products
+                    .map(
+                        (p) => `
+      <tr>
+        <td>
+          ${
+              p.imageUrl
+                  ? `<img src="${p.imageUrl}" class="product-thumb-cell" alt="${p.name}">`
+                  : `<div class="product-thumb-placeholder">No img</div>`
+          }
+        </td>
+        <td style="color:var(--cream); font-weight:300;">${p.name}</td>
+        <td><span class="badge">${p.collection}</span></td>
+        <td style="color:var(--gold-light);">${p.price}</td>
+        <td style="font-size:0.75rem;">${p.avail}</td>
+        <td>
+          <div class="td-actions">
+            <button class="btn-sm btn-sm-del" onclick="deleteProduct('${p.id}')">Delete</button>
+          </div>
+        </td>
+      </tr>
+    `,
+                    )
+                    .join("");
+
+                document.getElementById("products-table").style.display =
+                    "table";
+            }
+
+            // ── DELETE PRODUCT ──
+            window.deleteProduct = async function (id) {
+                if (!confirm("Delete this product?")) return;
+                try {
+                    await deleteDoc(doc(db, "products", id));
+                    showToast("Product deleted");
+                    loadProducts();
+                } catch (err) {
+                    showToast("Error deleting product", "error");
+                }
+            };
+
+            // ── LOAD STATS ──
+            async function loadStats() {
+                try {
+                    const snapshot = await getDocs(collection(db, "products"));
+                    const products = [];
+                    snapshot.forEach((d) => products.push(d.data()));
+
+                    document.getElementById("stat-total").textContent =
+                        products.length;
+                    document.getElementById("stat-signature").textContent =
+                        products.filter(
+                            (p) => p.collection === "signature",
+                        ).length;
+                    document.getElementById("stat-limited").textContent =
+                        products.filter(
+                            (p) => p.collection === "limited",
+                        ).length;
+                    document.getElementById("stat-instock").textContent =
+                        products.filter((p) => p.avail === "In Stock").length;
+                } catch (err) {
+                    console.error(err);
+                }
+            }
+
+            // Init
+            loadStats();
+        </script>
+    </body>
+</html>
